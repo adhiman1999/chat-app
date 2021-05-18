@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Marginer } from "../marginer";
-import validator from "validator";
+//import validator from "validator";
 import axios from "axios";
 import {
   BoxContainer,
