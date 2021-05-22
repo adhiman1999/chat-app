@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Marginer } from "../marginer";
 //import validator from "validator";
+/* import { useCookies } from "react-cookie"; */
 import axios from "axios";
 import {
   BoxContainer,
@@ -15,6 +16,7 @@ import { AccountContext } from "./accountContext";
 import history from "../../history";
 
 export function LoginForm(props) {
+  /* const [cookies, setCookie] = useCookies(['access_token']); */
   const { switchtoSignUp } = useContext(AccountContext);
   const [Error, setError] = useState("");
   const [fields, handleFieldChange] = useState({
