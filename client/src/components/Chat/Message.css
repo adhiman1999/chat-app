@@ -1,0 +1,26 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 10px;
+  font-size: 15px;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: #ffffffff;
+  margin-bottom: 30px;
+}
+
+.message__text {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #1877f2;
+  color: white;
+  max-width: 300px;
+}
+.message__own {
+  align-items: flex-end;
+}
+.message__own > .message__text {
+  background-color: rgb(245, 241, 241);
+  color: black;
+}

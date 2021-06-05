@@ -1,14 +1,34 @@
 import { Avatar } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./SidebarChat.css";
-const SidebarChat = () => {
+
+
+const SidebarChat = ({ conversation, currentUser }) => {
+  const [user, setUser] = useState(currentUser);
+
+  useEffect(() => {
+    const friendId = conversation.members.find((m) => m !== currentUser.id);
+    const getUser = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/user?userId=" + friendId
+        );
+        console.log(res);
+        setUser(res.data.data);
+        console.log(user);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [currentUser, conversation]);
   return (
     <div className="sidebarChat">
-      <Avatar />
       <div className="sidebarChat__info">
-        <h2>Room name</h2>
-        <p>Last Message...</p>
+        <h2>{user.fullName}</h2>
       </div>
+      <Avatar />
     </div>
   );
 };

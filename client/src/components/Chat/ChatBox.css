@@ -60,3 +60,11 @@
   font-weight: 800;
   font-size: xx-small;
 }
+
+.noConversationText {
+  position: relative;
+  display: grid;
+  justify-content: center;
+  margin-top: 20rem;
+  cursor: default;
+}

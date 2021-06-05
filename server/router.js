@@ -3,6 +3,8 @@ const { request } = require("express");
 const express = require("express");
 const router = express.Router();
 const User = require("./models/User");
+const Conversation = require("./models/Conversation");
+const Message = require("./models/Message");
 const dotenv = require("dotenv");
 dotenv.config();
 const bcrypt = require("bcrypt");
@@ -87,5 +89,63 @@ router.post("/signin", async (req, res) => {
     }
   }
 });
+//<------------------------------SignIn API------------------------------------------->
+router.get("/user", async (req, res) => {
+  const userId = req.query.userId;
+  try {
+    const user = await User.findById(userId);
+    const { password, date, isVerified, ...other } = user._doc;
+    res.status(200).json({ status: "Success", data: other });
+  } catch (err) {
+    res.status(500).json({ status: "Error", message: err });
+  }
+});
+//<------------------------------New Conversation API------------------------------------------->
+router.post("/conversation", async (req, res) => {
+  const newConversation = new Conversation({
+    members: [req.body.senderId, req.body.receiverId],
+  });
+  try {
+    const savedConversation = await newConversation.save();
+    res.status(200).json({
+      status: "Success",
+      data: savedConversation,
+    });
+  } catch (err) {
+    res.status(500).json({ status: "Error", message: err });
+  }
+});
 
+//<------------------------------Get Conversations API------------------------------------------->
+router.get("/conversation/:userId", async (req, res) => {
+  try {
+    const conversation = await Conversation.find({
+      members: { $in: [req.params.userId] },
+    });
+    res.status(200).json({ status: "Success", data: conversation });
+  } catch (err) {
+    res.status(500).json({ status: "Error", Error: err });
+  }
+});
+//<------------------------------New Message API------------------------------------------->
+router.post("/message", async (req, res) => {
+  const newMessage = new Message(req.body);
+  try {
+    const savedMessage = await newMessage.save();
+    res.status(200).json({ status: "Success", data: savedMessage });
+  } catch (err) {
+    res.status(500).json({ status: "Error", Error: err });
+  }
+});
+//<------------------------------Get Messages API------------------------------------------->
+router.get("/messages/:conversationId", async (req, res) => {
+  try {
+    const messages = await Message.find({
+      conversationId: req.params.conversationId,
+    });
+    res.status(200).json({ status: "Success", data: messages });
+  } catch (err) {
+    res.status(500).json({ status: "Error", Error: err });
+  }
+});
 module.exports = router;
