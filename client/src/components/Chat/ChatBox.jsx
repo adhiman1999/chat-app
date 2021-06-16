@@ -31,7 +31,8 @@ const ChatBox = (props) => {
           "http://localhost:5000/messages/" + props.currentChat?._id
         );
         setMessages(res.data.data);
-        //console.log("HELLO", res.data.data);
+        console.log(props.currentChat);
+        console.log("HELLO", res.data);
       } catch (err) {
         console.log(err);
       }
@@ -71,7 +72,7 @@ const ChatBox = (props) => {
               <span>No messsges</span>
             ) : (
               messages.map((m) => (
-                <Message message={m} own={m.sender === user._id} />
+                <Message message={m} own={m.sender == user.id} />
               ))
             )}
           </div>

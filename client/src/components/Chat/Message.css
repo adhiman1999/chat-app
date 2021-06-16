@@ -1,26 +1,33 @@
 .message {
   display: flex;
   flex-direction: column;
-  position: relative;
   padding: 10px;
   font-size: 15px;
   width: fit-content;
   border-radius: 10px;
-  background-color: #ffffffff;
   margin-bottom: 30px;
 }
 
 .message__text {
   padding: 10px;
   border-radius: 20px;
-  background-color: #1877f2;
-  color: white;
+  background-color: white;
+  color: black;
   max-width: 300px;
 }
-.message__own {
-  align-items: flex-end;
+.message.own {
+  margin-left: auto;
 }
-.message__own > .message__text {
-  background-color: rgb(245, 241, 241);
-  color: black;
+.message.own > .message__text {
+  background-color: #1877f2;
+  color: white;
+}
+
+.message__time {
+  font-size: 12px;
+  margin-top: 10px;
+  margin-right: auto;
+}
+.message.own > .message__time {
+  margin-left: auto;
 }
