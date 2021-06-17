@@ -26,19 +26,29 @@ const ChatBox = (props) => {
   const user = jwt(token);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  //const [socket, setSocket] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
   const scrollRef = useRef();
 
   useEffect(() => {
     socket.current = io("ws://localhost:5000");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
   }, []);
 
   useEffect(() => {
+    arrivalMessage &&
+      props.currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, props.currentChat]);
+
+  useEffect(() => {
     socket.current.emit("addUser", user.id);
-    socket.current.on("getUsers", (users) => {
-      console.log("USERS", users);
-    });
   }, [user]);
   useEffect(() => {
     const getMessages = async () => {
@@ -59,20 +69,32 @@ const ChatBox = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const message = {
-      sender: user.id,
-      text: newMessage,
-      conversationId: props.currentChat._id,
-    };
+    if (e.target.value === "") {
+      const message = {
+        sender: user.id,
+        text: newMessage,
+        conversationId: props.currentChat._id,
+      };
 
-    try {
-      const res = await axios.post("http://localhost:5000/message", message);
-      setMessages([...messages, res.data.data]);
-      setNewMessage("");
-    } catch (err) {
-      console.log(err);
+      socket.current?.emit("sendMessage", {
+        senderId: user.id,
+        receiverId: props.currentChat.members.find(
+          (member) => member !== user.id
+        ),
+        text: newMessage,
+      });
+      try {
+        const res = await axios.post("http://localhost:5000/message", message);
+        setMessages([...messages, res.data.data]);
+        setNewMessage(""); //to clear the input after sending message
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert("Can't send empty message");
     }
   };
+
   const classes = useStyles();
   return (
     <div className="chat">
@@ -102,7 +124,7 @@ const ChatBox = (props) => {
             ) : (
               messages.map((m) => (
                 <div ref={scrollRef}>
-                  <Message message={m} own={m.sender == user.id} />
+                  <Message message={m} own={m.sender === user.id} />
                 </div>
               ))
             )}

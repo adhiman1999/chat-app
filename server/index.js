@@ -38,9 +38,14 @@ const addUser = (userId, socketId) => {
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
+const getUser = (userId) => {
+  return users.find((user) => user.userId === userId);
+};
 //<------------------------------------------------------------>
 io.on("connection", (socket) => {
+  //<-------------on new connection------>
   console.log("We have a new connection");
+  //<-------------on disconnection------->
   socket.on("disconnect", () => {
     console.log("User has left");
     removeUser(socket.id);
@@ -50,5 +55,15 @@ io.on("connection", (socket) => {
     addUser(userId, socket.id);
     io.emit("getUsers", users);
   });
-  io.emit("welcome", "hello this is socket server");
+  //<------------messages--------------->
+  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    console.log(senderId, receiverId, text);
+    const user = getUser(receiverId);
+    console.log(user);
+    io.to(user.socketId).emit("getMessage", {
+      senderId,
+      text,
+    });
+  });
+  io.emit("welcome", "Greetings from the sockets");
 });

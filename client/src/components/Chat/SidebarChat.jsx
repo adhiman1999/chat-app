@@ -3,7 +3,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./SidebarChat.css";
 
-
 const SidebarChat = ({ conversation, currentUser }) => {
   const [user, setUser] = useState(currentUser);
 
@@ -14,9 +13,7 @@ const SidebarChat = ({ conversation, currentUser }) => {
         const res = await axios.get(
           "http://localhost:5000/user?userId=" + friendId
         );
-        console.log(res);
         setUser(res.data.data);
-        console.log(user);
       } catch (err) {
         console.log(err);
       }
