@@ -58,12 +58,15 @@ io.on("connection", (socket) => {
   //<------------messages--------------->
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     console.log(senderId, receiverId, text);
-    const user = getUser(receiverId);
-    console.log(user);
-    io.to(user.socketId).emit("getMessage", {
-      senderId,
-      text,
-    });
+    try {
+      const user = getUser(receiverId);
+      io.to(user.socketId).emit("getMessage", {
+        senderId,
+        text,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   });
   io.emit("welcome", "Greetings from the sockets");
 });

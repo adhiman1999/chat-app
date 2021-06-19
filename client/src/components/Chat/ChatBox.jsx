@@ -27,9 +27,9 @@ const ChatBox = (props) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [userFriend, setUserFriend] = useState("Open a Conversation");
   const socket = useRef();
   const scrollRef = useRef();
-
   useEffect(() => {
     socket.current = io("ws://localhost:5000");
     socket.current.on("getMessage", (data) => {
@@ -61,6 +61,18 @@ const ChatBox = (props) => {
         console.log(err);
       }
     };
+    const friendId = props.currentChat?.members.find((m) => m !== user.id);
+    const getUser = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/user?userId=" + friendId
+        );
+        setUserFriend(res.data.data.fullName);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
     getMessages();
   }, [props.currentChat]);
   useEffect(() => {
@@ -69,29 +81,25 @@ const ChatBox = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (e.target.value === "") {
-      const message = {
-        sender: user.id,
-        text: newMessage,
-        conversationId: props.currentChat._id,
-      };
+    const message = {
+      sender: user.id,
+      text: newMessage,
+      conversationId: props.currentChat._id,
+    };
 
-      socket.current?.emit("sendMessage", {
-        senderId: user.id,
-        receiverId: props.currentChat.members.find(
-          (member) => member !== user.id
-        ),
-        text: newMessage,
-      });
-      try {
-        const res = await axios.post("http://localhost:5000/message", message);
-        setMessages([...messages, res.data.data]);
-        setNewMessage(""); //to clear the input after sending message
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      alert("Can't send empty message");
+    socket.current?.emit("sendMessage", {
+      senderId: user.id,
+      receiverId: props.currentChat.members.find(
+        (member) => member !== user.id
+      ),
+      text: newMessage,
+    });
+    try {
+      const res = await axios.post("http://localhost:5000/message", message);
+      setMessages([...messages, res.data.data]);
+      setNewMessage(""); //to clear the input after sending message
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -101,8 +109,7 @@ const ChatBox = (props) => {
       <div className="chat__header">
         <Avatar />
         <div className="chat__header__info">
-          <h2>Room name</h2>
-          <p>Last Seen at...</p>
+          <h2>{userFriend}</h2>
         </div>
         <div className="chat__headerRight">
           <IconButton>
@@ -153,6 +160,7 @@ const ChatBox = (props) => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                disabled={newMessage.trim() === ""}
                 className={classes.button}
                 endIcon={<SendIcon />}
                 onClick={handleSubmit}

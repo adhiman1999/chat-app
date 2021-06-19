@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
+import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
 import "./Sidebar.css";
 import jwt from "jwt-decode";
 import {
@@ -62,7 +63,7 @@ function Sidebar(props) {
           <IconButton
             style={{ marginRight: "2vw", fontSize: "24px !important" }}
           >
-            <DonutLargeIcon />
+            <AddCircleOutlinedIcon />
           </IconButton>
           <IconButton
             style={{ marginRight: "2vw", fontSize: "24px !important" }}

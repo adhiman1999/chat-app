@@ -3,7 +3,6 @@
   flex-direction: column;
   padding: 10px;
   font-size: 15px;
-  width: fit-content;
   border-radius: 10px;
   margin-bottom: 30px;
 }
@@ -14,8 +13,9 @@
   background-color: white;
   color: black;
   max-width: 300px;
+  width: fit-content;
 }
-.message.own {
+.message.own > .message__text {
   margin-left: auto;
 }
 .message.own > .message__text {
@@ -25,9 +25,11 @@
 
 .message__time {
   font-size: 12px;
+  color: #424242;
   margin-top: 10px;
   margin-right: auto;
 }
 .message.own > .message__time {
   margin-left: auto;
+  margin-right: 0;
 }
