@@ -11,9 +11,10 @@ const SidebarChat = ({ conversation, currentUser }) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/user?userId=" + friendId
+          "http://localhost:5000/user?userId_username=" + friendId
         );
         setUser(res.data.data);
+        //console.log(res.data.data);
       } catch (err) {
         console.log(err);
       }

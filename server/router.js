@@ -10,6 +10,7 @@ dotenv.config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const helper = require("./helper_functions");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 //<-----------------------------------Welcome API--------------------------------------->
 router.get("/", async (req, res) => {
@@ -46,8 +47,6 @@ router.post("/signup", async (req, res) => {
 //<------------------------------Verify OTP API------------------------------------------->
 router.post("/verify-otp", async (req, res) => {
   const isValid = helper.verifyToken(req.body.OTP);
-  console.log(req.body.OTP);
-  console.log(isValid);
   if (isValid) {
     console.log(req.body.email);
     await User.updateOne(
@@ -91,9 +90,16 @@ router.post("/signin", async (req, res) => {
 });
 //<------------------------------SignIn API------------------------------------------->
 router.get("/user", async (req, res) => {
-  const userId = req.query.userId;
+  const userId = req.query.userId_username;
+  const $or = [{ username: userId }];
+  if (ObjectId.isValid(userId)) {
+    $or.push({ _id: ObjectId(userId) });
+  }
   try {
-    const user = await User.findById(userId);
+    const user = await User.findOne({
+      $or: $or,
+    });
+    console.log(user);
     const { password, date, isVerified, ...other } = user._doc;
     res.status(200).json({ status: "Success", data: other });
   } catch (err) {
@@ -102,6 +108,7 @@ router.get("/user", async (req, res) => {
 });
 //<------------------------------New Conversation API------------------------------------------->
 router.post("/conversation", async (req, res) => {
+  console.log("Hello", req.body.senderId, req.body.receiverId);
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
   });

@@ -28,18 +28,15 @@ export function LoginForm(props) {
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
     const login = {
       email_username: fields.email_username,
       password: fields.password,
     };
 
     await axios.post("http://localhost:5000/signin", login).then((res) => {
-      console.log(res.data);
       setError(res.data.message);
       if (res.data.status === "Success") {
         //switchtoVerifyOTP();
-        console.log(res.data.token);
         localStorage.setItem("token", res.data.token, (err) => {
           console.log(err);
         });
@@ -73,12 +70,10 @@ export function LoginForm(props) {
         Login
       </SubmitButton>
       <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#">
-        Don't have an account?{" "}
-        <BoldLink href="#" onClick={switchtoSignUp}>
-          SignUp
-        </BoldLink>
-      </MutedLink>
+      <MutedLink href="#">Don't have an account? </MutedLink>
+      <BoldLink href="#" onClick={switchtoSignUp}>
+        SignUp
+      </BoldLink>
     </BoxContainer>
   );
 }

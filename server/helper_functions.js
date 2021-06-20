@@ -37,7 +37,6 @@ module.exports = {
   verifyToken: async (token) => {
     const secret = process.env.OTP_SECRET;
     const isValid = await totp.check(token, secret);
-    console.log("YO", isValid);
     return isValid;
   },
   //---------------------------------------Auth Middleware-----------------------------------------//

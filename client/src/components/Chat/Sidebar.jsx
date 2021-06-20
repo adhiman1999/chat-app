@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DonutLargeIcon from "@material-ui/icons/DonutLarge";
+//import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Avatar, IconButton } from "@material-ui/core";
@@ -8,6 +8,7 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
+import AddConversation from "./AddConversation";
 import "./Sidebar.css";
 import jwt from "jwt-decode";
 import {
@@ -45,9 +46,8 @@ function Sidebar(props) {
         const res = await axios.get(
           "http://localhost:5000/conversation/" + user.id
         );
-        console.log(res.data.data);
         setConversations(res.data.data);
-        console.log(conversations);
+        //console.log(conversations);
       } catch (err) {
         console.log(err);
       }
@@ -63,7 +63,11 @@ function Sidebar(props) {
           <IconButton
             style={{ marginRight: "2vw", fontSize: "24px !important" }}
           >
-            <AddCircleOutlinedIcon />
+            <AddConversation
+              currentUser={user}
+              setConversations={setConversations}
+              conversations={conversations}
+            />
           </IconButton>
           <IconButton
             style={{ marginRight: "2vw", fontSize: "24px !important" }}
@@ -97,6 +101,7 @@ function Sidebar(props) {
       <div className="sidebar__chats">
         {conversations.map((c) => (
           <div
+            key={c._id}
             onClick={() => {
               props.handler(c);
             }}

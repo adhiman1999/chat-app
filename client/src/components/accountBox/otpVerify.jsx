@@ -19,13 +19,11 @@ export function OtpVerify(props) {
   const { switchtoSignIn } = useContext(AccountContext);
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
     const otp = {
       OTP: fields.otp,
       email: props.email,
     };
     await axios.post("http://localhost:5000/verify-otp", otp).then((res) => {
-      console.log(res.data);
       setError(res.data.message);
       if (res.data.status === "Success") {
         switchtoSignIn();

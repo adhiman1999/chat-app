@@ -52,7 +52,6 @@ export function SignupForm(props) {
     }
   };
   const validateForm = () => {
-    console.log("Bruh Error");
     return (
       fields.email.length > 0 &&
       validator.isEmail(fields.email) &&
@@ -62,7 +61,6 @@ export function SignupForm(props) {
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
     props.handler(fields.email);
     const registered = {
       fullName: fields.fullName,
@@ -75,7 +73,6 @@ export function SignupForm(props) {
       await axios
         .post("http://localhost:5000/signup", registered)
         .then((res) => {
-          console.log(res.data);
           setError(res.data.message);
           if (res.data.status === "Success") {
             switchtoVerifyOTP();
@@ -137,12 +134,10 @@ export function SignupForm(props) {
         Register
       </SubmitButton>
       <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#">
-        Already have an account?{" "}
-        <BoldLink href="#" onClick={switchtoSignIn}>
-          SignIn
-        </BoldLink>
-      </MutedLink>
+      <MutedLink href="#">Already have an account? </MutedLink>
+      <BoldLink href="#" onClick={switchtoSignIn}>
+        SignIn
+      </BoldLink>
     </BoxContainer>
   );
 }

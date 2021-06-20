@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ChatBox = (props) => {
   const token = localStorage.getItem("token");
   const user = jwt(token);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([""]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [userFriend, setUserFriend] = useState("Open a Conversation");
@@ -65,7 +65,7 @@ const ChatBox = (props) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/user?userId=" + friendId
+          "http://localhost:5000/user?userId_username=" + friendId
         );
         setUserFriend(res.data.data.fullName);
       } catch (err) {
@@ -74,7 +74,7 @@ const ChatBox = (props) => {
     };
     getUser();
     getMessages();
-  }, [props.currentChat]);
+  }, [props.currentChat, user.id]);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -129,8 +129,8 @@ const ChatBox = (props) => {
             {messages.length === 0 ? (
               <span className="noConversationText">No Messages</span>
             ) : (
-              messages.map((m) => (
-                <div ref={scrollRef}>
+              messages.map((m, index) => (
+                <div key={index} ref={scrollRef}>
                   <Message message={m} own={m.sender === user.id} />
                 </div>
               ))

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ChatBody } from "./common";
 import Sidebar from "./Sidebar";
 import ChatBox from "./ChatBox";
-export default function Chat(props) {
+export default function Chat() {
   const [currentChat, setCurrentChat] = useState(null);
   return (
     <ChatBody>

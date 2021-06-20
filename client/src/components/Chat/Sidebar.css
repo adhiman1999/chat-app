@@ -3,3 +3,19 @@
   background-color: white;
   overflow-y: auto;
 }
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+.ReactModal {
+  width: 300px;
+  height: 300px;
+}
