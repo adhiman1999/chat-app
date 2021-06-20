@@ -26,6 +26,7 @@ const ChatBox = (props) => {
   const user = jwt(token);
   const [messages, setMessages] = useState([""]);
   const [newMessage, setNewMessage] = useState("");
+  const [newInput, setNewInput] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [userFriend, setUserFriend] = useState("Open a Conversation");
   const socket = useRef();
@@ -83,6 +84,8 @@ const ChatBox = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setNewMessage(newInput);
+    setNewInput("");
     const message = {
       sender: user.id,
       text: newMessage,
@@ -158,8 +161,8 @@ const ChatBox = (props) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={(e) => setNewMessage(e.target.value)}
-                value={newMessage}
+                onChange={(e) => setNewInput(e.target.value)}
+                value={newInput}
               />
               <Button
                 type="submit"
