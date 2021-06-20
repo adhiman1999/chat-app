@@ -11,7 +11,8 @@ const SidebarChat = ({ conversation, currentUser }) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/user?userId_username=" + friendId
+          "https://morning-scrubland-01222.herokuapp.com/user?userId_username=" +
+            friendId
         );
         setUser(res.data.data);
         //console.log(res.data.data);

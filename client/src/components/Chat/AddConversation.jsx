@@ -32,7 +32,8 @@ function AddConversation({ currentUser, setConversations, conversations }) {
   const getUser = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/user?userId_username=" + username
+        "https://morning-scrubland-01222.herokuapp.com/user?userId_username=" +
+          username
       );
 
       return res.data.data._id;
@@ -47,7 +48,7 @@ function AddConversation({ currentUser, setConversations, conversations }) {
     };
     try {
       const res = await axios.post(
-        "http://localhost:5000/conversation",
+        "https://morning-scrubland-01222.herokuapp.com/conversation",
         conversation
       );
       setConversations([...conversations, res.data.data]);

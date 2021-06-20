@@ -33,16 +33,18 @@ export function LoginForm(props) {
       password: fields.password,
     };
 
-    await axios.post("http://localhost:5000/signin", login).then((res) => {
-      setError(res.data.message);
-      if (res.data.status === "Success") {
-        //switchtoVerifyOTP();
-        localStorage.setItem("token", res.data.token, (err) => {
-          console.log(err);
-        });
-        history.push("/Chat");
-      }
-    });
+    await axios
+      .post("https://morning-scrubland-01222.herokuapp.com/signin", login)
+      .then((res) => {
+        setError(res.data.message);
+        if (res.data.status === "Success") {
+          //switchtoVerifyOTP();
+          localStorage.setItem("token", res.data.token, (err) => {
+            console.log(err);
+          });
+          history.push("/Chat");
+        }
+      });
   };
   return (
     <BoxContainer>

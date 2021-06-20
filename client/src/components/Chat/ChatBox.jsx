@@ -31,7 +31,7 @@ const ChatBox = (props) => {
   const socket = useRef();
   const scrollRef = useRef();
   useEffect(() => {
-    socket.current = io("ws://localhost:5000");
+    socket.current = io("wss://morning-scrubland-01222.herokuapp.com");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -54,7 +54,8 @@ const ChatBox = (props) => {
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/messages/" + props.currentChat?._id
+          "https://morning-scrubland-01222.herokuapp.com/messages/" +
+            props.currentChat?._id
         );
         setMessages(res.data.data);
       } catch (err) {
@@ -65,7 +66,8 @@ const ChatBox = (props) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/user?userId_username=" + friendId
+          "https://morning-scrubland-01222.herokuapp.com/user?userId_username=" +
+            friendId
         );
         setUserFriend(res.data.data.fullName);
       } catch (err) {
@@ -95,7 +97,10 @@ const ChatBox = (props) => {
       text: newMessage,
     });
     try {
-      const res = await axios.post("http://localhost:5000/message", message);
+      const res = await axios.post(
+        "https://morning-scrubland-01222.herokuapp.com/message",
+        message
+      );
       setMessages([...messages, res.data.data]);
       setNewMessage(""); //to clear the input after sending message
     } catch (err) {

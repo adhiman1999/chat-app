@@ -71,7 +71,10 @@ export function SignupForm(props) {
 
     if (validateForm()) {
       await axios
-        .post("http://localhost:5000/signup", registered)
+        .post(
+          "https://morning-scrubland-01222.herokuapp.com/signup",
+          registered
+        )
         .then((res) => {
           setError(res.data.message);
           if (res.data.status === "Success") {
