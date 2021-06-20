@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
-import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
+//import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
 import AddConversation from "./AddConversation";
 import "./Sidebar.css";
 import jwt from "jwt-decode";
@@ -44,7 +44,8 @@ function Sidebar(props) {
     const getConversations = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/conversation/" + user.id
+          "https://morning-scrubland-01222.herokuapp.com/conversation/" +
+            user.id
         );
         setConversations(res.data.data);
         //console.log(conversations);
