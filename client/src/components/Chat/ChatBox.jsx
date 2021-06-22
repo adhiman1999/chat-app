@@ -100,12 +100,12 @@ const ChatBox = (props) => {
       text: newMessage,
     });
     setMessages([...messages, message]);
-    setMessages("");
     try {
       const res = await axios.post(
         "https://morning-scrubland-01222.herokuapp.com/message",
         message
       );
+      setMessages("");
       console.log(res);
 
       //to clear the input after sending message
