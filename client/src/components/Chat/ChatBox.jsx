@@ -99,7 +99,7 @@ const ChatBox = (props) => {
       ),
       text: newMessage,
     });
-    setMessages([...messages, newMessage]);
+    setMessages([...messages, message]);
     try {
       const res = await axios.post(
         "https://morning-scrubland-01222.herokuapp.com/message",
