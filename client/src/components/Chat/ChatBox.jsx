@@ -85,6 +85,7 @@ const ChatBox = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setNewMessage(newInput);
+    console.log(newInput);
     setNewInput("");
     const message = {
       sender: user.id,
