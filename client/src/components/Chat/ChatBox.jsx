@@ -168,7 +168,7 @@ const ChatBox = (props) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={newMessage.trim() === ""}
+                disabled={newInput.trim() === ""}
                 className={classes.button}
                 endIcon={<SendIcon />}
                 onClick={handleSubmit}
