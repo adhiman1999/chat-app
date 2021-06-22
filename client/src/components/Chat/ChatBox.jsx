@@ -105,7 +105,7 @@ const ChatBox = (props) => {
         "https://morning-scrubland-01222.herokuapp.com/message",
         message
       );
-      setMessages("");
+      setNewMessage("");
       console.log(res);
 
       //to clear the input after sending message
