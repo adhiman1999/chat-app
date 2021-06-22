@@ -84,10 +84,8 @@ const ChatBox = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setNewMessage(newInput);
-    console.log("newMessage", newMessage);
-    console.log("newInput", newInput);
     setNewInput("");
+    console.log("newMessage", newMessage);
     const message = {
       sender: user.id,
       text: newMessage,
@@ -163,14 +161,17 @@ const ChatBox = (props) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={(e) => setNewInput(e.target.value)}
+                onChange={(e) => {
+                  setNewMessage(e.target.value);
+                  setNewInput(e.target.value);
+                }}
                 value={newInput}
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={newInput.trim() === ""}
+                disabled={newMessage.trim() === ""}
                 className={classes.button}
                 endIcon={<SendIcon />}
                 onClick={handleSubmit}
