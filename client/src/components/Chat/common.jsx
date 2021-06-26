@@ -6,6 +6,9 @@ export const ChatBody = styled.div`
   height: 90vh;
   width: 90vw;
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+  @media (max-width: 756px) {
+    flex: 0;
+  }
 `;
 
 export const SidebarContainer = styled.div`
@@ -13,7 +16,7 @@ export const SidebarContainer = styled.div`
   flex-direction: column;
   flex: 0.32;
   @media (max-width: 756px) {
-    flex: 0.32;
+    flex: 1;
     //flex-direction: column;
   }
 `;
