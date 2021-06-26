@@ -25,7 +25,7 @@ const server = app.listen(PORT, () =>
 //<------------------socket.io (WebSocket) Server-------------->
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://musing-albattani-438d1a.netlify.app",
+    origin: "https://stupefied-shockley-9c27be.netlify.app",
   },
 });
 
