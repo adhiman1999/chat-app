@@ -13,7 +13,7 @@ export const SidebarContainer = styled.div`
   flex-direction: column;
   flex: 0.32;
   @media (max-width: 756px) {
-    flex: 1;
+    flex: 0.32;
     //flex-direction: column;
   }
 `;
